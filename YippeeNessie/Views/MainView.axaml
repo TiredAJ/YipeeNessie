@@ -3,14 +3,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:YippeeNessie.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="270" d:DesignHeight="630"
              x:Class="YippeeNessie.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<Panel>
+		<Button HorizontalAlignment="Center"
+				Command="{Binding NessieTime}">
+			<TextBlock FontSize="35">
+				Press me!
+			</TextBlock>
+		</Button>
+		<Image Source="{Binding Nessie}" IsVisible="{Binding ShowNessie}"/>
+		
+	</Panel>
 </UserControl>

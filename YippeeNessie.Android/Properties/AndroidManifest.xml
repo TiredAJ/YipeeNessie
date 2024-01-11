@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="Pre-Alpha" package="dev.TiredAJ.YippeeNessie">
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="YippeeNessie" android:icon="@drawable/Icon" />
+	<application android:label="YippeeNessie" android:icon="@drawable/icon" />
+	<uses-sdk android:minSdkVersion="30" android:targetSdkVersion="34" />
 </manifest>
