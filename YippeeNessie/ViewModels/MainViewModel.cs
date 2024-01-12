@@ -11,7 +11,7 @@ namespace YippeeNessie.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    private static LibVLC LVLC;
+    //private static LibVLC LVLC;
 
     private Media YippeeMedia;
 
@@ -40,14 +40,14 @@ public class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        YippeeAudio = new Uri("avares://YippeeNessie/Assets/Yippee.wav");
+        YippeeAudio = new Uri("avares://YippeeNessie/Assets/Yippee.mp3", UriKind.Absolute);
         Nessie = new Bitmap(AssetLoader.Open(NessieLoc));
 
-        LVLC = new LibVLC();
+        //LVLC = new LibVLC("--file-caching=0");
 
-        YippeeMedia = new Media(LVLC, YippeeAudio.AbsolutePath);
+        Debug.WriteLine($"Is uri file?: {YippeeAudio.IsFile}");
 
-        LVLC.Log += LVLC_Log;
+        //LVLC.Log += LVLC_Log;
     }
 
     private void LVLC_Log(object? sender, LogEventArgs e)
@@ -55,15 +55,23 @@ public class MainViewModel : ViewModelBase
 
     public void NessieTime()
     {
-        using (var MP = new MediaPlayer(YippeeMedia))
-        {
-            MP.Play();
 
-            if (!MP.WillPlay)
-            {
-                throw new Exception("Won't play audio");
-            }
-            MP.Volume += 1;
-        }
+        //using (Media M = new Media(LVLC, new StreamMediaInput(AssetLoader.Open(YippeeAudio))))
+        //{
+        //    using (var MP = new MediaPlayer(M))
+        //    {
+        //        MP.Volume = 20;
+
+        //        MP.Play();
+
+        //        Debug.WriteLine(MP.Volume);
+
+        //        //if (!MP.WillPlay)
+        //        //{
+        //        //    throw new Exception("Won't play audio");
+        //        //}
+        //        MP.Volume += 1;
+        //    }
+        //}
     }
 }
