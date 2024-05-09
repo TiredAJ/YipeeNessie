@@ -1,6 +1,15 @@
 <Project>
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <AvaloniaVersion>11.0.6</AvaloniaVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <AvaloniaVersion>11.0.6</AvaloniaVersion>
+		<!-- The line below disables the StyleCop -->
+		<AllegroDotnetSdkEnableStyleCopConfig>false</AllegroDotnetSdkEnableStyleCopConfig>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<GlobalPackageReference Include="AsyncFixer" Version="1.6.0"/>
+		<GlobalPackageReference Include="Meziantou.Analyzer" Version="1.0.758"/>
+		<GlobalPackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435"/>
+	</ItemGroup>
+	
 </Project>

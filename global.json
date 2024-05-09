@@ -1,0 +1,9 @@
+{
+    "sdk": {
+        "version": "8.0.100",
+        "rollForward": "latestFeature"
+    },
+    "msbuild-sdks": {
+        "Allegro.DotnetSdk": "2.2.2"
+    }
+}

@@ -2,20 +2,21 @@
 
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using LibVLCSharp.Shared;
+using ManagedBass;
 using ReactiveUI;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace YippeeNessie.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    //private static LibVLC LVLC;
-
-    private Media YippeeMedia;
-
-    public Uri YippeeAudio { get; }
+    private static int SHandle = 0;
+    private Uri Audio =>
+        new Uri("avares://YippeeNessie/Assets/Yippee.mp3");
     private Uri NessieLoc =>
         new Uri("avares://YippeeNessie/Assets/Green_Nessie.png");
 
@@ -28,8 +29,6 @@ public class MainViewModel : ViewModelBase
         { this.RaiseAndSetIfChanged(ref _Nessie, value); }
     }
 
-    private MediaPlayer MP { get; }
-
     private bool _ShowNessie = false;
     public bool ShowNessie
     {
@@ -40,38 +39,29 @@ public class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        YippeeAudio = new Uri("avares://YippeeNessie/Assets/Yippee.mp3", UriKind.Absolute);
         Nessie = new Bitmap(AssetLoader.Open(NessieLoc));
+        Bass.Init(-1);
 
-        //LVLC = new LibVLC("--file-caching=0");
-
-        Debug.WriteLine($"Is uri file?: {YippeeAudio.IsFile}");
-
-        //LVLC.Log += LVLC_Log;
+        using (FileStream FS = File.OpenWrite(Path.GetTempFileName()))
+        {
+            AssetLoader.Open(Audio).CopyTo(FS);
+            SHandle = Bass.CreateStream(FS.Name);
+        }
     }
-
-    private void LVLC_Log(object? sender, LogEventArgs e)
-    { Debug.WriteLine(e.FormattedLog); }
 
     public void NessieTime()
     {
+        Debug.WriteLine(Bass.LastError);
 
-        //using (Media M = new Media(LVLC, new StreamMediaInput(AssetLoader.Open(YippeeAudio))))
-        //{
-        //    using (var MP = new MediaPlayer(M))
-        //    {
-        //        MP.Volume = 20;
+        Bass.ChannelPlay(SHandle, true);
 
-        //        MP.Play();
+        ShowNessie = true;
 
-        //        Debug.WriteLine(MP.Volume);
+        Task.Run(() =>
+        {
+            Thread.Sleep(2000);
 
-        //        //if (!MP.WillPlay)
-        //        //{
-        //        //    throw new Exception("Won't play audio");
-        //        //}
-        //        MP.Volume += 1;
-        //    }
-        //}
+            ShowNessie = false;
+        });
     }
 }
